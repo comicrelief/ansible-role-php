@@ -1,0 +1,24 @@
+---
+
+- name: Add different php apt repository
+  apt_repository:
+    repo: "{{ item }}"
+  with_items: php_ppa
+  when: php_ppa is defined
+
+
+- name: Install php packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items: php_packages
+  when: php_packages is defined
+
+- name: Install php modules
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items: php_modules
+  when: php_modules is defined
