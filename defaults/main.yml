@@ -1,9 +1,12 @@
 ---
 
-#php5 Variables - Packages will be installed using kosssi.apt role
-apt_install_repositories:
+#php5 Variables
+php_ppa:
   - ppa:ondrej/php5
-apt_install: [php5, php5-fpm, git]
+php_packages:
+  - php5
+  - php5-fpm
+  - git
 
 #Composer Variables
 php_composer: true
