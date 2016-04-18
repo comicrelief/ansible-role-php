@@ -1,0 +1,4 @@
+---
+
+- include: composer.yml
+  when: php_composer
