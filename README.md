@@ -1,5 +1,7 @@
 # Ansible Role: PHP
 
+[![Build Status](https://travis-ci.org/davidedimauro88/ansible-role-php.svg?branch=master)](https://travis-ci.org/davidedimauro88/ansible-role-php)
+
 Installs PHP, composer and other tools on Debian/Ubuntu systems.
 
 ---
