@@ -2,4 +2,6 @@
 
 - include: install.yml
 - include: composer.yml
-  when: php_composer and php_composer is defined
+  when: php_composer
+- include: drush.yml
+  when: php_drush

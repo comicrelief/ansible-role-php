@@ -1,0 +1,39 @@
+---
+
+- name: Install drush using composer
+  sudo: no
+  shell: >
+    composer require drush/drush:{{ php_drush_version }}
+    chdir=/tmp/
+
+- name: Run composer install to drush dir
+  sudo: no
+  shell: >
+    composer install
+    chdir=/tmp/vendor/drush/drush/
+
+- name: Ensure that composer dir doesn't exist in /var/lib
+  file:
+    path: /var/lib/composer
+    state: absent
+
+- name: Move composer modules to /var/lib
+  sudo: true
+  shell: mv /tmp/vendor /var/lib/composer
+
+- name: Create symlinks for composer modules
+  sudo: yes
+  file:
+    src: "/var/lib/composer/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  with_items: php_composer_binaries
+
+- name: Run drush dl for registry_rebuild
+  sudo: false
+  shell: "drush dl registry_rebuild-7 -y"
+  when: php_drush_rr and php_drush_version == "7"
+
+- name: Change .drush dir permissions
+  shell: find /home -type d -name ".drush" -exec chmod -R 2777 '{}' ';'
+  when: php_drush_rr
