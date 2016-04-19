@@ -84,9 +84,11 @@ The role comes with three different unit test files which are:
 
 _Note_: Ruby, rspec, test kitchen and test kitchen for ansible need to be installed!
 
+---
 ##Dependencies
 none
 
+---
 ##Example Playbook
     - hosts: webservers
       vars_files:
@@ -94,8 +96,10 @@ none
       roles:
         - { role: ansible-role-php }
 
+---
 ##License
 MIT / BSD
 
+---
 ##Author Information
 This role was created in 2016 by *Davide Di Mauro*.
