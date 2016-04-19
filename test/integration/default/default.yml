@@ -9,8 +9,8 @@
     - php_packages:
         - apache2
         - curl
-        - git
         - php5
         - php5-fpm
     - php_drush_rr: true
     - php_drush_version: 8
+    - php_conf: true
