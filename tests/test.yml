@@ -2,7 +2,7 @@
 
 - hosts: all
   roles:
-    - ansible-role-php
+    - role_under_test
   vars:
     - php_drush: true
     - php_packages:
