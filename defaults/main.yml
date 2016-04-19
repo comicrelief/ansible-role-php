@@ -5,8 +5,8 @@ php_ppa:
   - ppa:ondrej/php5
 php_packages:
   - php5
+  - php5-cli
   - php5-fpm
-  - git
 
 #Composer Variables
 php_composer: true
@@ -14,9 +14,25 @@ php_composer: true
 #php5 modules and dependencies
 php_modules:
   - php5-mysql
+  - php5-curl
+  - php5-cli
+  - php5-gd
+  - imagemagick
+  - php5-memcache
+  - php5-dev
+  - php5-imagick
+  - php-pear
 
+#Drush configuration - if php_drush == false, the task won't be run
 php_drush: false
 php_drush_version: 7
 php_composer_binaries:
   - drush
 php_drush_rr: false
+
+#PHP configurations - default configurations will allow php to listen to localhost:9000
+php_conf: false
+php_conf_vars:
+  - dest: /etc/php5/fpm/pool.d/www.conf
+    regexp: ^listen\ =
+    line: 'listen = 127.0.0.1:9000'
