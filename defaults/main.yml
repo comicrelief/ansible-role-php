@@ -2,7 +2,7 @@
 
 #php5 Variables
 php_ppa:
-  - ppa:ondrej/php5
+  - ppa:ondrej/php5-5.6
 php_packages:
   - php5
   - php5-cli
