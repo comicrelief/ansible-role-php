@@ -5,5 +5,6 @@
     dest: "{{ item.dest | default('/etc/php5/fpm/pool.d/www.conf')}}"
     regexp: "{{ item.regexp | default('^listen\ =')}}"
     line: "{{ item.line | default('listen = 127.0.0.1:9000')}}"
-  with_items: php_conf_vars
+  with_items: "{{ php_conf_vars }}"
   when: php_conf
+  notify: Restart services
