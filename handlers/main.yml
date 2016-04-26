@@ -1,0 +1,8 @@
+---
+
+- name: Restart services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items: "{{ php_service }}"
+  when: php_service is defined
