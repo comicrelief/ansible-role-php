@@ -2,7 +2,7 @@
 
 - name: Install drush using composer
   shell: >
-    composer require drush/drush:{{ php_drush_version }}
+    composer require drush/drush:{{ php_drush_version | default("7") }}
     chdir=/tmp/
 
 - name: Run composer install to drush dir
@@ -33,4 +33,4 @@
 
 - name: Change .drush dir permissions
   shell: find /home -type d -name ".drush" -exec chmod -R 2777 '{}' ';'
-  when: php_drush_rr
+  when: php_drush_rr and php_drush_version == "7"
