@@ -4,5 +4,5 @@
 - include: config.yml
 - include: composer.yml
   when: php_composer
-- include: drush.yml
-  when: php_drush
+- include: composer-modules.yml
+  when: php_composer
