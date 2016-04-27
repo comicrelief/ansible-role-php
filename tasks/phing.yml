@@ -1,7 +1,0 @@
----
-
-- name: Install phing using composer
-  shell: >
-    composer require phing/phing:{{ php_phing_version | default("2.*") }}
-    chdir=/tmp/
-
