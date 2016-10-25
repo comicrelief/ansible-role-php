@@ -11,7 +11,7 @@
   apt:
     name: "{{ item }}"
     update_cache: yes
-    state: present
+    state: latest
   with_items: "{{ php_packages }}"
   when: php_packages is defined
 
