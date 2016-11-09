@@ -4,9 +4,9 @@
 php_ppa:
   - ppa:ondrej/php
 php_packages:
-  - php5
-  - php5-cli
-  - php5-fpm
+  - php5.6
+  - php5.6-cli
+  - php5.6-fpm
 
 #Services that need to be restarted
 php_service:
