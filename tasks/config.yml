@@ -6,5 +6,5 @@
     regexp: "{{ item.regexp | default('^listen\ =')}}"
     line: "{{ item.line | default('listen = 127.0.0.1:9000')}}"
   with_items: "{{ php_conf_vars }}"
-  when: php_conf
+  when: php_conf == true
   notify: Restart services

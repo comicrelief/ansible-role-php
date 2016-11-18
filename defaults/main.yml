@@ -10,7 +10,7 @@ php_packages:
 
 #Services that need to be restarted
 php_service:
-  - php5-fpm
+  - php5.6-fpm
 
 #Composer Variables
 php_composer: true
@@ -36,6 +36,6 @@ php_drush_rr: false
 #PHP configurations - default configurations will allow php to listen to localhost:9000
 php_conf: false
 php_conf_vars:
-  - dest: /etc/php5/fpm/pool.d/www.conf
+  - dest: /etc/php/5.6/fpm/pool.d/www.conf
     regexp: ^listen\ =
     line: 'listen = 127.0.0.1:9000'
