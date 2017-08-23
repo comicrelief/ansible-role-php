@@ -9,7 +9,7 @@
   when: php_conf == true
   notify: Restart services
 
-- name: Add envconsul to init file
+- name: Add envconsul to init.d job
   lineinfile:
     dest: "/etc/init.d/{{item}}"
     regexp: "^DAEMON=/usr/sbin/$NAME"
@@ -18,11 +18,19 @@
   when: php_envconsul == true
   notify: Restart services
 
-- name: Run php-fpm under envconsul
+- name: Run php-fpm under envconsul in init.d
   lineinfile:
     dest: "/etc/init.d/{{item}}"
     regexp: "^DAEMON_ARGS=\"--daemonize\ --fpm-config\ $CONFFILE\""
     line: "DAEMON_ARGS=\"-prefix\ {{env}}/{{product_name}}\ -sanitize\ -upcase\ /usr/sbin/$NAME\ --daemonize\ --fpm-config\ $CONFFILE\""
   with_items: "{{php_service}}"
   when: php_envconsul == true
+  notify: Restart services
+
+- name: Run php7.1-fpm under envconsul in upstart
+  lineinfile:
+    dest: "/etc/init/php7.1-fpm.conf"
+    regexp: "^exec\ /usr/sbin/php-fpm7.1\ --nodaemonize\ --fpm-config\ /etc/php/7.1/fpm/php-fpm.conf"
+    line: "exec\ /usr/local/bin/envconsul\ -prefix\ {{env}}/{{product_name}}\ -sanitize\ -upcase\ /usr/sbin/php-fpm7.1\ --daemonize\ --fpm-config\ /etc/php/7.1/fpm/php-fpm.conf"
+  when: php_envconsul == true and "php7.1-fpm" in php_service
   notify: Restart services
