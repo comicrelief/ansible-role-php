@@ -8,3 +8,21 @@
   with_items: "{{ php_conf_vars }}"
   when: php_conf == true
   notify: Restart services
+
+- name: Add envconsul to init file
+  lineinfile:
+    dest: "/etc/init.d/{{item}}"
+    regexp: "^DAEMON=/usr/sbin/$NAME"
+    line: "DAEMON=\"/usr/local/bin/envconsul\""
+  with_items: "{{php_service}}"
+  when: php_envconsul == true
+  notify: Restart services
+
+- name: Run php-fpm under envconsul
+  lineinfile:
+    dest: "/etc/init.d/{{item}}"
+    regexp: "^DAEMON_ARGS=\"--daemonize\ --fpm-config\ $CONFFILE\""
+    line: "DAEMON_ARGS=\"-prefix\ {{env}}/{{product_name}}\ -sanitize\ -upcase\ /usr/sbin/$NAME\ --daemonize\ --fpm-config\ $CONFFILE\""
+  with_items: "{{php_service}}"
+  when: php_envconsul == true
+  notify: Restart services
