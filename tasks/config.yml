@@ -5,6 +5,8 @@
     dest: "{{ item.dest | default('/etc/php5/fpm/pool.d/www.conf')}}"
     regexp: "{{ item.regexp | default('^listen\ =')}}"
     line: "{{ item.line | default('listen = 127.0.0.1:9000')}}"
+    backrefs: yes
+    state: present
   with_items: "{{ php_conf_vars }}"
   when: php_conf == true
   notify: Restart services
@@ -14,6 +16,8 @@
     dest: "/etc/init.d/{{item}}"
     regexp: "^DAEMON=/usr/sbin/$NAME"
     line: "DAEMON=\"/usr/local/bin/envconsul\""
+    backrefs: yes
+    state: present
   with_items: "{{php_service}}"
   when: php_envconsul is defined and php_envconsul == true
   notify: Restart services
@@ -23,6 +27,8 @@
     dest: "/etc/init.d/{{item}}"
     regexp: "^DAEMON_ARGS=\"--daemonize\ --fpm-config\ $CONFFILE\""
     line: "DAEMON_ARGS=\"-prefix\ {{env}}/{{product_name}}\ -sanitize\ -upcase\ /usr/sbin/$NAME\ --daemonize\ --fpm-config\ $CONFFILE\""
+    backrefs: yes
+    state: present
   with_items: "{{php_service}}"
   when: php_envconsul is defined and php_envconsul == true
   notify: Restart services
@@ -32,5 +38,7 @@
     dest: "/etc/init/php7.1-fpm.conf"
     regexp: "^exec\ /usr/sbin/php-fpm7.1\ --nodaemonize\ --fpm-config\ /etc/php/7.1/fpm/php-fpm.conf"
     line: "exec\ /usr/local/bin/envconsul\ -prefix\ {{env}}/{{product_name}}\ -sanitize\ -upcase\ /usr/sbin/php-fpm7.1\ --daemonize\ --fpm-config\ /etc/php/7.1/fpm/php-fpm.conf"
+    backrefs: yes
+    state: present
   when: php_envconsul is defined and php_envconsul == true and "php7.1-fpm" in php_service
   notify: Restart services
